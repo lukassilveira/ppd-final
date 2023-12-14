@@ -1,0 +1,26 @@
+.main-container {
+  height: 100vh;
+}
+
+.friends-container {
+  margin-right: 1em;
+}
+
+.friend-list-item {
+  border: 1px solid cyan;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.message-list-item {
+  border: 1px solid cyan;
+  border-radius: 10px;
+}
+
+.sender-message {
+  justify-content: flex-end;
+}
+
+.sender-message > span {
+  background-color: cyan;
+}

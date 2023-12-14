@@ -1,0 +1,22 @@
+<div class="main-container">
+  <h2>Registrar</h2>
+  <form (ngSubmit)="onRegister()">
+    <div class="mb-3">
+      <label for="username" class="form-label">Username:</label>
+      <input
+        type="text"
+        class="form-control"
+        id="username"
+        [(ngModel)]="userName"
+        name="username"
+        required
+      />
+    </div>
+    <div class="d-flex flex-column">
+      <button type="submit" class="btn btn-primary">Registrar</button>
+      <button type="button" routerLink="/login" class="btn btn-link">
+        Voltar
+      </button>
+    </div>
+  </form>
+</div>

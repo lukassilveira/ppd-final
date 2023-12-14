@@ -1,0 +1,55 @@
+<div class="main-container p-5 d-flex">
+  <div
+    class="friends-container border border-primary rounded w-50 mr-1 p-2 d-flex flex-column justify-content-between"
+  >
+    <div>
+      <div class="friends-title">Amigos</div>
+      <div class="friends-list d-flex flex-column align-items-start">
+        <span
+          *ngFor="let friend of retrieveFriends()"
+          class="mt-2 friend-list-item p-2"
+          (click)="retrieveMessagesFromFriend(friend)"
+          >{{ friend }}</span
+        >
+      </div>
+    </div>
+    <div class="d-flex flex-row justify-content-between">
+      <div>
+        <span> Adicionar Amigo: </span>
+        <input type="text" [(ngModel)]="friendName" />
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="addFriend()">
+        Adicionar
+      </button>
+    </div>
+  </div>
+  <div
+    class="messages-container border border-primary rounded w-50 ml-1 p-2 d-flex flex-column justify-content-between"
+  >
+    <div class="friends-list d-flex flex-column align-items-start">
+      <span>Mensagens</span>
+      <div
+        *ngFor="let message of messages"
+        class="w-100 d-flex"
+        [ngClass]="{
+          'sender-message': message.sender.toLowerCase() == getUsername()
+        }"
+      >
+        <span class="mt-2 message-list-item p-2" >{{ message.text }} </span>
+      </div>
+    </div>
+    <div class="d-flex flex-row justify-content-between">
+      <div>
+        <span> Mensagem: </span>
+        <input type="text" [(ngModel)]="message" />
+      </div>
+      <button
+        type="submit"
+        class="btn btn-primary"
+        (click)="sendMessage(message)"
+      >
+        Enviar
+      </button>
+    </div>
+  </div>
+</div>
