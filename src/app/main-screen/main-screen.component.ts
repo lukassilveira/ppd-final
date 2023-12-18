@@ -9,41 +9,13 @@ import { WebsocketService } from '../websocket.service';
 export class MainScreenComponent implements OnInit {
   constructor(private websocketService: WebsocketService) {}
 
+  selectedFriend = '';
   friendName = '';
   friends = [];
 
   message = '';
   allMessages = [];
-  messages: any = [
-    // {
-    //   text: 'oi',
-    //   date: Date.now(),
-    //   sender: 'Lukas',
-    //   receiver: 'Mariana',
-    //   received: false,
-    // },
-    // {
-    //   text: 'tudo bom?',
-    //   date: Date.now(),
-    //   sender: 'Mariana',
-    //   receiver: 'Lukas',
-    //   received: false,
-    // },
-    // {
-    //   text: 'tudo e vc?',
-    //   date: Date.now(),
-    //   sender: 'Lukas',
-    //   receiver: 'Mariana',
-    //   received: false,
-    // },
-    // {
-    //   text: 'to bem tbm',
-    //   date: Date.now(),
-    //   sender: 'Mariana',
-    //   receiver: 'Lukas',
-    //   received: false,
-    // },
-  ];
+  messages: any = [];
 
   ngOnInit(): void {
     console.log(this.getUsername());
@@ -57,12 +29,18 @@ export class MainScreenComponent implements OnInit {
         })[0];
         this.friends = currentUser.friends;
         this.allMessages = currentUser.messages;
+        console.log(this.allMessages);
+        this.retrieveMessagesFromFriend(this.selectedFriend);
       });
   }
 
   getUsername(): string {
-    return 'lukas';
-    // return this.websocketService.userName;
+    // return 'lukas';
+    return this.websocketService.userName;
+  }
+
+  isFriendSelected(): boolean {
+    return this.selectedFriend != '';
   }
 
   addFriend(): void {
@@ -75,8 +53,19 @@ export class MainScreenComponent implements OnInit {
     return this.friends;
   }
 
-  sendMessage(message: string) {
-    console.log(message);
+  sendMessage(message: string) {    
+    const messageData = {
+      text: message,
+      date: Date.now(),
+      sender: this.getUsername(),
+      receiver: this.selectedFriend,
+      received: true,
+    };
+    
+    this.websocketService.sendMessage(messageData);
+    this.message = '';
+    this.retrieveMessagesFromFriend(this.selectedFriend);
+    this.websocketService.retrieveFriends();
   }
 
   retrieveMessagesFromFriend(friend: string) {
@@ -88,7 +77,19 @@ export class MainScreenComponent implements OnInit {
           message.sender.toLowerCase() === friend.toLowerCase())
       );
     });
-    console.log(this.messages);
-    
+  }
+
+  selectFriend(friend: string) {
+    this.selectedFriend = friend;
+  }
+
+  deleteFriend(friend: string) {
+    this.websocketService.deleteFriend(friend);
+    this.websocketService.retrieveFriends();
+    console.log('deleting friend', friend);
+  }
+
+  logout() {
+    console.log('logging out');
   }
 }

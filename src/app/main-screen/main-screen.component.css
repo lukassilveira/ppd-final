@@ -10,6 +10,11 @@
   border: 1px solid cyan;
   border-radius: 10px;
   cursor: pointer;
+  margin-right: 10px;
+}
+
+.friends-title {
+  margin-bottom: 10px;
 }
 
 .message-list-item {
@@ -23,4 +28,12 @@
 
 .sender-message > span {
   background-color: cyan;
+}
+
+.selected-friend {
+  background-color: cyan;
+}
+
+.logout-button {
+  margin-right: 10px;
 }

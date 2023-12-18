@@ -13,36 +13,8 @@ export class WebsocketService {
     const data = {
       name: userName,
       status: 'offline',
-      messages: [
-        {
-          text: 'oi',
-          date: Date.now(),
-          sender: 'Lukas',
-          receiver: 'Mariana',
-          received: false,
-        },
-        {
-          text: 'tudo bom?',
-          date: Date.now(),
-          sender: 'Mariana',
-          receiver: 'Lukas',
-          received: false,
-        },
-        {
-          text: 'tudo e vc?',
-          date: Date.now(),
-          sender: 'Lukas',
-          receiver: 'Mariana',
-          received: false,
-        },
-        {
-          text: 'to bem tbm',
-          date: Date.now(),
-          sender: 'Mariana',
-          receiver: 'Lukas',
-          received: false,
-        },
-      ],
+      friends: [],
+      messages: [],
     };
     this.socket.emit('register', data);
     // this.socket.emit('register', userData);
@@ -63,5 +35,13 @@ export class WebsocketService {
 
   retrieveFriendsListener() {
     return this.socket.fromEvent('retrieveFriendsListener');
+  }
+
+  sendMessage(messageData: any) {
+    this.socket.emit("sendMessage", messageData);
+  }
+
+  deleteFriend(friendName: string) {
+    this.socket.emit('deleteFriend', this.userName, friendName);
   }
 }
